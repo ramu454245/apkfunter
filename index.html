@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+body{
+    color:#000;
+    background:#f5f5f5;
+    margin:0;
+    font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+
+main{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    flex-direction:column;
+}
+
+.loginForm{
+    max-width:320px;
+    width:100%;
+}
+
+.lgCard{
+    background:#fff;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 6px 16px rgba(2,3,2,1.25);
+    text-align:center;
+}
+
+.lgCard h1{
+    color:#001555;
+    margin-bottom:20px;
+}
+
+.form-group{
+    text-align:left;
+    margin-bottom:15px;
+}
+
+.form-group label{
+    font-weight:600;
+    display:block;
+    margin-bottom:5px;
+}
+
+.form-group input{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid #ccc;
+    font-size:14px;
+    outline:none;
+}
+
+.btn{
+    margin-top:10px;
+    padding:10px 20px;
+    border-radius:10px;
+    border:2px solid #001555;
+    background:transparent;
+    color:#001555;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#001555;
+    color:#fff;
+}
+
+.error{
+    color:red;
+    margin-top:10px;
+    font-weight:600;
+    display:none;
+}
+
+.buttons-brands{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.buttons-brands a{
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:12px;
+    font-weight:600;
+    border:2px solid;
+}
+
+/* Colors */
+.buttons-brands a:nth-child(1){
+    color:#2f80ed;
+    border-color:#2f80ed;
+}
+.buttons-brands a:nth-child(2){
+    color:#001555;
+    border-color:#001555;
+}
+.buttons-brands a:nth-child(3){
+    color:#ff8a33;
+    border-color:#ff8a33;
+}
+
+/* ✅ FULL WHITE SPINNER */
+#loader{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#fff; /* FULL WHITE */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+#loader img{
+    width:80px;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- Spinner -->
+<div id="loader">
+    <img src="https://i.ibb.co/Mkcsfds4/spin.gif">
+</div>
+
+<main>
+    <div class="loginForm">
+
+        <div class="lgCard">
+            <h1>Login</h1>
+
+            <div class="form-group">
+                <label>Token ID</label>
+                <input type="text" id="token" placeholder="Token ID *">
+            </div>
+
+            <div class="form-group" id="pinBox" style="display:none;">
+                <label>Enter PIN</label>
+                <input type="password" id="pin" placeholder="Enter PIN">
+            </div>
+
+            <button class="btn" onclick="handleLogin()">Proceed</button>
+
+            <div class="error" id="errorMsg">Invalid PIN </div>
+        </div>
+
+        <div class="buttons-brands">
+            <a href="https://t.me/apkfunterbot?text=%2Fpurchase" target="_blank" onclick="showLoader()">Purchase / Buy</a>
+            <a href="https://t.me/apkfunterbot?text=%2Frenew" target="_blank" onclick="showLoader()">Renew / Renewal</a>
+            <a href="https://t.me/apkfunterbot" target="_blank" onclick="showLoader()">Contact</a>
+        </div>
+
+    </div>
+</main>
+
+<script>
+// Page load → spinner hide
+window.onload = function(){
+    setTimeout(()=>{
+        document.getElementById("loader").style.display="none";
+    },1000);
+}
+
+// Show loader
+function showLoader(){
+    document.getElementById("loader").style.display="flex";
+}
+
+// Login logic
+function handleLogin(){
+    showLoader();
+
+    let token = document.getElementById("token").value;
+    let pinBox = document.getElementById("pinBox");
+    let pin = document.getElementById("pin").value;
+    let errorMsg = document.getElementById("errorMsg");
+
+    setTimeout(()=>{
+
+        if(token !== "" && pinBox.style.display === "none"){
+            pinBox.style.display = "block";
+            errorMsg.style.display = "none";
+            document.getElementById("loader").style.display="none";
+            return;
+        }
+
+        if(pin !== ""){
+            errorMsg.style.display = "block";
+        }
+
+        document.getElementById("loader").style.display="none";
+
+    },1000);
+}
+</script>
+
+</body>
+</html>
